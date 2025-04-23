@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: book-directory-backend
+    env: node
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        fromDatabase:
+          name: book-directory-db
+          property: connectionString
+    healthCheckPath: /api/books
+    autoDeploy: true
+
+databases:
+  - name: book-directory-db
+    databaseName: book_directory
+    user: book_directory_user
+    plan: free 
